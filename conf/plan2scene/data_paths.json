@@ -1,0 +1,9 @@
+{
+  "data_list_path_spec": "./data/input/data_lists/{split}.txt",
+  "arch_path_spec": "./data/processed/full_archs/{split}/{house_key}.scene.json",
+  "photoroom_path_spec": "./data/processed/photo_assignments/{split}/drop_{drop_fraction}/{house_key}.photoroom.csv",
+  "rectified_crops_path": "./data/processed/rectified_crops",
+  "train_texture_prop_val_data": "./data/processed/vgg_crop_select/val/drop_0.0",
+  "train_texture_prop_train_data": "./data/processed/vgg_crop_select/train/drop_0.0",
+  "gt_reference_crops_val": "./data/processed/gt_reference/val/texture_crops"
+}

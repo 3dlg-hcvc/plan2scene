@@ -1,0 +1,16 @@
+{
+    "substance_classifier":{
+        "conf_path": "./trained_models/substance_classifier/v2/conf/substance_classifier_conf.json",
+        "checkpoint_path": "./trained_models/substance_classifier/v2/checkpoints/correct_57_total_64_epoch_120.ckpt"
+    },
+    "tileability_mean_metric":{
+        "gaussian_std": 21,
+        "kernel_size": 128
+    },
+    "fid": {
+        "minimum_crop_count": 2048,
+        "batch_size": 32,
+        "dims": 2048,
+        "device": "cuda"
+    }
+}

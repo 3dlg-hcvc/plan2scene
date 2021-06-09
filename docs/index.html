@@ -1,0 +1,296 @@
+<html>
+    <head>
+        <title>Plan2Scene</title>
+        <link  rel="stylesheet" href="css/index.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header" id="header">
+                <h1>Plan2Scene: Converting Floorplans to 3D Scenes</h1>
+                <ul>
+                    <li><a href="https://madhawav.github.io/">Madhawa Vidanapathirana</a></li>
+                    <li><a href="#">Qirui Wu</a></li>
+                    <li><a href="https://www.cs.sfu.ca/~furukawa/">Yasutaka Furukawa</a></li>
+                    <li><a href="https://angelxuanchang.github.io/">Angel X. Chang</a></li>
+                    <li><a href="https://msavva.github.io/">Manolis Savva</a></li>
+                </ul>
+                <span>Simon Fraser University</span>
+                <span>CVPR 2021</span>
+            </div>
+            <div class="link-bar">
+                
+            </div>
+            <div class="intro-image">
+                <img class="intro-image" src="img/intro.png"/>
+                <label for="intro-image" class="intro-image-label">Our system addresses the Plan2Scene task by converting a floorplan and set of photos into a textured 3D mesh model.</label>
+                
+            </div>
+
+            <div class="section abstract">
+                <h2>Abstract</h2>
+                <p>
+                    We address the task of converting a floorplan and a set of associated photos of a residence into a textured 3D mesh model, 
+                    a task which we call <b>Plan2Scene</b>. Our system 1) lifts a floorplan image to a 3D mesh model; 2) synthesizes surface textures based on the input photos; 
+                    and 3) infers textures for unobserved surfaces using a graph neural network architecture. 
+                    To train and evaluate our system we create indoor surface texture datasets, and augment a dataset of floorplans and photos from prior work with rectified surface crops and additional annotations. 
+                    Our approach handles the challenge of producing tileable textures for dominant surfaces such as floors, walls, and ceilings from a sparse set of unaligned photos that only partially cover the residence. 
+                    Qualitative and quantitative evaluations show that our system produces realistic 3D interior models, outperforming baseline approaches on a suite of texture quality metrics and as measured by a holistic user study.
+                </p> 
+                
+            </div>
+            <div class="link-bar">
+                [<a href="https://github.com/3dlg-hcvc/plan2scene">GitHub</a>]
+                [<a href="#">Paper</a>]
+                [<a href="https://aspis.cmpt.sfu.ca/projects/plan2scene/supplemental/plan2scene-supp.pdf">Supplemental Material</a>]
+                <!-- <p style="text-align: center;"><b>The code, data and paper will be made available by CVPR 2021 conference dates.<b></p> -->
+            </div>
+            <div class="section video">
+                <h2>Summary Video</h2>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/rTgnW7AobLs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+
+            <div class="section qualitative-results">
+                <h2>Qualitative Results</h2>
+                <video height="290" autoplay muted loop>
+                    <source src="https://madhawav.github.io/plan2scee-site-content/mp4/45665893_compressed.mp4" type="video/mp4">
+                </video>
+                <video height="290" autoplay muted loop>
+                    <source src="https://madhawav.github.io/plan2scee-site-content/mp4/47325578_2_compressed.mp4" type="video/mp4">
+                </video>
+                <video height="290" autoplay muted loop>
+                    <source src="https://madhawav.github.io/plan2scee-site-content/mp4/47547656_6_compressed.mp4" type="video/mp4">
+                </video>
+                <video height="290" autoplay muted loop>
+                    <source src="https://madhawav.github.io/plan2scee-site-content/mp4/42761030_6_v2_compressed.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="section results">
+                <h2>Quantitative Results</h2>
+                <div class="results-table">
+                    <table>
+                        <tr class="table-header">
+                            <th rowspan="2" class="border-right border-bottom"></th>
+                            <th colspan="6" class="border-right">Observed Surfaces</th>
+                            <th colspan="6" class="border-right">Unobserved Surfaces</th>
+                            <th colspan="6">All Surfaces</th>
+                        </tr>
+                        <tr class="table-header border-bottom">
+                            <th>Color</th>
+                            <th>Freq</th>
+                            <th>Subs<br><small>CVPR<br>Version</small></th>
+                            <th><a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/pretrained_models.md#substance-classifier">Subs<br><small>Version<br>2*</small></a></th>
+                            <th>FID</th>
+                            <th class="border-right">Tile</th>
+                            <th>Color</th>
+                            <th>Freq</th>
+                            <th>Subs<br><small>CVPR</small><br/><small>Version</small></th>
+                            <th><a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/pretrained_models.md#substance-classifier">Subs<br><small>Version<br>2*</small></a></th>
+                            <th>FID</th>
+                            <th class="border-right">Tile</th>
+                            <th>Color</th>
+                            <th>Freq</th>
+                            <th>Subs<br><small>CVPR<br>Version</small></th>
+                            <th><a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/pretrained_models.md#substance-classifier">Subs<br><small>Version<br>2*</small></a></th>
+                            <th>FID</th>
+                            <th>Tile</th>
+                        </tr>
+                        <tr class="double-border-bottom">
+                            <td class="border-right">Crop</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="border-right">38.1</td>
+                            <td>0.768</td>
+                            <td>0.026</td>
+                            <td>0.345</td>
+                            <td>0.510</td>
+                            <td>57.2</td>
+                            <td class="border-right">40.6</td>
+                            <td>0.459</td> 
+                            <td>0.016</td>
+                            <td>0.208</td>
+                            <td>0.277</td>
+                            <td>35.6</td>
+                            <td>39.5</td>
+                        </tr>
+                        <tr>
+                            <td class="border-right">Retrieve</td>
+                            <td>0.561</td>
+                            <td>0.054</td>
+                            <td>0.473</td>
+                            <td>0.684</td>
+                            <td>238.2</td>
+                            <td class="border-right">17.3</td>
+                            <td>0.751</td>
+                            <td>0.040</td>
+                            <td>0.437</td>
+                            <td>0.621</td>
+                            <td>261.5</td>
+                            <td class="border-right">19.1</td>
+                            <td>0.680</td>
+                            <td>0.046</td>
+                            <td>0.458</td>
+                            <td>0.650</td>
+                            <td>243.2</td>
+                            <td>18.3</td>
+                        </tr>
+                        <tr>
+                            <td class="border-right">Retrieve<br/><small>Version 2**</small></td>
+                            <td>0.498</td>
+                            <td>0.038</td>
+                            <td>0.471</td>
+                            <td>0.684</td>
+                            <td>221.4</td>
+                            <td class="border-right">17.3</td>
+                            <td>0.751</td>
+                            <td>0.034</td>
+                            <td>0.515</td>
+                            <td>0.602</td>
+                            <td>257.3</td>
+                            <td class="border-right">13.3</td>
+                            <td>0.657</td>
+                            <td>0.037</td>
+                            <td>0.471</td>
+                            <td>0.630</td>
+                            <td>232.3</td>
+                            <td>14.1</td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <td class="border-right">NaiveSynth</td>
+                            <td>0.694</td> 
+                            <td>0.046</td> 
+                            <td>0.385</td> 
+                            <td>0.752</td>
+                            <td>239.3</td> 
+                            <td class="border-right">21.7</td>
+                            <td>0.714</td>
+                            <td>0.044</td>
+                            <td>0.427</td>
+                            <td>0.738</td>
+                            <td>245.4</td>
+                            <td class="border-right">19.8</td>
+                            <td>0.709</td>
+                            <td>0.046</td>
+                            <td>0.404</td>
+                            <td>0.804</td>
+                            <td>239.4</td>
+                            <td>20.6</td>
+                        </tr>
+                        <tr>
+                            <td class="border-right">Synth (ours)<br><small>CVPR Version</small></td>
+                            <td>0.431</td>
+                            <td>0.035</td>
+                            <td><b>0.350</b></td>
+                            <td><b>0.463</b></td>
+                            <td>196.1</td>
+                            <td class="border-right">16.4</td>
+                            <td><b>0.653</b></td>
+                            <td>0.032</td>
+                            <td><b>0.393</b></td>
+                            <td>0.490</td>
+                            <td>199.4</td>
+                            <td class="border-right">18.6</td>
+                            <td>0.591</td>
+                            <td>0.034</td>
+                            <td>0.392</td>
+                            <td>0.485</td>
+                            <td>196.2</td>
+                            <td>17.6</td>
+                        </tr>
+                        <tr>
+                            <td class="border-right"><a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/pretrained_models.md">Synth (ours)<br><small>Version 2**</small></a></td>
+                            <td><b>0.386</b></td>
+                            <td><b>0.027</b></td>
+                            <td>0.382</td>
+                            <td>0.480</td>
+                            <td><b>158.8</b></td>
+                            <td class="border-right"><b>11.0</b></td>
+                            <td>0.714</td>
+                            <td><b>0.028</b></td>
+                            <td>0.413</td>
+                            <td><b>0.461</b></td>
+                            <td><b>178.9</b></td>
+                            <td class="border-right"><b>12.8</b></td>
+                            <td><b>0.579</b></td>
+                            <td><b>0.028</b></td>
+                            <td><b>0.380</b></td>
+                            <td><b>0.480</b></td>
+                            <td><b>166.9</b></td>
+                            <td><b>12.4</b></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <small>*Subs metric version 2 is trained on the stationary textures dataset version 2 and the open-surfaces dataset.</small><br/>
+                    <small>**Uses stationary textures dataset version 2.</small>
+                </div>
+            </div>
+
+            <div class="section qualitative-results">
+                <h2>Code and pretrained models</h2>
+                <p>Our source code is available on <a href="https://github.com/3dlg-hcvc/plan2scene/">GitHub</a>. Pretrained models are <a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/pretrained_models.md">available here</a>.</p>
+            </div>
+
+            <div class="data section">
+                <h2>Data</h2>
+                <table class="data-table">
+                    <tr>
+                        <td class="rent-3d-dataset">
+                            <h3>Rent3D++ Dataset</h3>
+                            <img class="rent-3d-dataset" src="./img/rent3dpp.png"/>
+                            <br>
+                            [<a href="https://forms.gle/mKAmnrzAm3LCK9ua6" target="_blank">Download Dataset</a>]
+                            <p>We train and evaluate Plan2Scene on the Rent3D++ dataset.</p>
+                            
+                        </td>
+                        <td class="stationary-textures-dataset">
+                            <h3>Stationary Textures Dataset</h3>
+                            <img class="stationary-textures-dataset" src="./img/stationary-textures-v2.png"/>
+                            <br>
+                            [<a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/stationary_textures_dataset_v1.md" target="_blank">Version 1</a>] 
+                            [<a href="https://github.com/3dlg-hcvc/plan2scene/blob/main/docs/md/stationary_textures_dataset_v2.md" target="_blank">Version 2</a>]
+                            <p>We train our texture synthesis approach on this dataet. The first version of the dataset is used in our CVPR paper. The second version of the dataset provide improved results on Rent3D houses.</p>
+                            
+                        </td>
+                        <td>
+                            <h3>Substance Mapped Textures Dataset</h3>
+                            <img class="smt-textures-dataset" src="./img/smt-textures.png"/>                     
+                            <p>We used this dataset for the retrieve baseline.</p>
+                        </td>
+                    </tr>
+                </table>                
+            </div>
+
+            <div class="section">
+                <h2>Relevant Publication</h2>
+                <p>If you find our work useful, please cite our paper below.<br></p>
+                <div>
+                    <figure class="quote">
+                        <blockquote>
+                        <b>Plain Text</b>
+                        <br>
+                        Madhawa Vidanapathirana, Qirui Wu, Yasutaka Furukawa, Angel X. Chang, and Manolis Savva. Plan2scene: Converting Floorplans to 3D Scenes. In Conference on Computer Vision and Pattern Recognition (CVPR), 2021.
+                        <br/>
+                        <br/>
+                        <b>BIBTEX</b>
+                        <br/>
+                        @inproceedings{Madhawa2021Plan2Scene, <br/>
+                        &nbsp;&nbsp;&nbsp;author = {Madhawa Vidanapathirana and Qirui Wu and Yasutaka Furukawa and Angel X. Chang and Manolis Savva}, <br/>
+                        &nbsp;&nbsp;&nbsp;title = {Plan2Scene: Converting Floorplans to 3D Scenes}, <br/>
+                        &nbsp;&nbsp;&nbsp;booktitle={CVPR}, <br/>
+                        &nbsp;&nbsp;&nbsp;year = {2021} <br/>
+                        } <br>
+                        </blockquote>
+                    </figure>
+                </div>
+            </div>
+
+        </div>
+        <br/>
+        
+    </body>
+    
+</html>

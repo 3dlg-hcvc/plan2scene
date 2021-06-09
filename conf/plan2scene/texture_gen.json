@@ -1,0 +1,15 @@
+{
+    "texture_synth_conf": "./trained_models/texture_gen/cc0textures-v2/config.yml",
+    "input_scale_up": 3,
+    "crops_per_mask": 10,
+    "checkpoint_path": "./trained_models/texture_gen/cc0textures-v2/checkpoints/loss-7.67493-epoch-750.ckpt",
+    "output_multiplier": 1,
+    "rgb_median_emb": true,
+    "combined_emb_dim": 11,
+    "masks_per_surface": {
+        "floor": 1,
+        "wall": 10,
+        "ceiling": 1
+    },
+    "multiprop_seeds": [12312,45415,65653,12324,76131,76353,79503, 55124,18249,34127, 54123,76317,635176,5314,90340,12316,75321,74138,51378,16351,538362,435174,2151347,123535, 929194,94929191]
+}

@@ -1,0 +1,33 @@
+{
+    "arch":{
+        "backbone": "vgg16",
+        "freeze": "last"
+    },
+    "datasets": {
+        "os": "./data/processed/open-surfaces-crops",
+        "textures": "./data/processed/stationary-textures-crops",
+        "label_mapping":{"smalltile":"tile", "plastered":"painted", "carpet-rug":"carpet"}
+    },
+    "train":{
+        "bs": 64,
+        "max_epoch": 200,
+        "lr":0.00001,
+        "shuffle":true,
+        "drop_last": true,
+        "crit": "cross_entropy",
+        "weight_loss_classes": true,
+        "optim": {
+            "type": "adam",
+            "params":{
+
+            }
+        },
+        "val": {
+            "bs": 64,
+            "shuffle":true,
+            "drop_last": true
+        }
+    },
+    "device": "cuda",
+    "substances": ["wood", "painted", "carpet", "tile"]
+}

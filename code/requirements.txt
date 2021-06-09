@@ -1,0 +1,10 @@
+torch==1.6.0
+torchvision==0.7.0
+numpy
+pandas
+pyyaml
+orderedattrdict
+kornia==0.2.0
+tensorboard
+git+https://github.com/sbrisard/moisan2011.git@master # Used by the freq metric
+pytorch-fid==0.1.1

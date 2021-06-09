@@ -1,0 +1,62 @@
+cache_dataset: false
+device: cuda
+num_workers: 8
+dim: 2
+noise:
+  octaves: 8
+
+image:
+  image_res: &image_res 128 # (height, width)
+  scale_factor: 2
+  hsv_decomp: true
+  rgb_decomp: false
+  hsv: false
+
+texture:
+  e: &texture_e 64 # encoding size
+
+dataset:
+  path: './data/input/stationary-textures-dataset-v2'
+  substances:
+    - wood
+    - plastered
+    - tile
+    - carpet
+
+system:
+  arch:
+    model_texture_encoder:
+      model_params:
+        shape_in:  [[3, *image_res, *image_res]]
+        bottleneck_size: 8
+    model_texture_decoder:
+      model_params:
+        n_max_features: 128
+        n_blocks: 4
+        dropout_ratio: 0.0
+        non_linearity: 'relu'
+        bias: True
+        encoding: *texture_e
+    model_substance_classifier:
+      model_params:
+        available: true
+
+  optimizer_params:
+    kind: 'adam'
+    lr: 0.0001
+    weight_decay: 0.0001
+
+  loss_params:
+    style_loss:
+      kind: 'mse'
+    substance_loss:
+      kind: 'cross_entropy'
+    style_weight: 1.0
+    substance_weight: 1.0
+
+train:
+  epochs: 3000
+  bs: 16
+  accumulate_grad_batches: 1
+  seed: 41127
+  resample_count: 1

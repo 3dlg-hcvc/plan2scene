@@ -1,0 +1,32 @@
+{
+  "render": {
+    "stk_render_script_path": "Path/to/scene-toolkit/ssc/render-file.js",
+    "scene_json": {
+      "stk_config_file_path": "Path/to/scene-toolkit/ssc/config/render_scene.json",
+      "extra_args": [
+        "--use_search_controller",
+        "--use_ambient_occlusion",
+        "--ambient_occlusion_type edl"
+      ]
+    },
+    "arch_json": {
+      "stk_config_file_path": "Path/to/scene-toolkit/ssc/config/render_arch.json",
+      "extra_args": [
+        "--use_search_controller",
+        "--use_ambient_occlusion",
+        "--ambient_occlusion_type edl"
+      ]
+    }
+  },
+  "export": {
+    "stk_export_script_path": "Path/to/scene-toolkit/ssc/export-mesh.js",
+    "scene_json": {
+      "stk_config_file_path": "Path/to/scene-toolkit/ssc/config/export_scene.json",
+      "output_format": "gltf",
+      "extra_args": [
+
+      ]
+    }
+  },
+  "node_path": "Path/to/.nvm/versions/node/v10.13.0/bin/node"
+}

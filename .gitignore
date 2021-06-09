@@ -1,0 +1,16 @@
+data
+data_backup
+.idea
+trained_models
+__pycache__
+conf/plan2scene/render.json
+code/src/plan2scene/texture_gen/custom_ops/noise_kernel/build/
+code/src/plan2scene/texture_gen/custom_ops/noise_kernel/noise_cuda.egg-info
+code/src/plan2scene/texture_gen/custom_ops/noise_kernel/dist
+.vscode/launch.json
+tmp
+*.pyc
+experiments
+conf/plan2scene/seam_correct.json
+conf/plan2scene/render.json
+*.backup

@@ -1,0 +1,749 @@
+{
+  "photo_unobserve_fractions": [
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1.0
+  ],
+  "object_aabb_room_intersection_threshold": 0.9,
+  "in_hole_distance_threshold": 0.02,
+  "def_object_fit_entire_wall_ratio": 0.1,
+  "outdoor_room_types": [
+    "Balcony",
+    "Terrace"
+  ],
+  "bathroom_room_types": [
+    "Bathroom"
+  ],
+  "object_type_specific_rules": {
+    "sort_candidates_using_dx_max_aabb_length_difference": [
+      "closet"
+    ],
+    "use_centroid_as_corners": [
+      "bathtub"
+    ]
+  },
+  "def_wall_depth": 0.1,
+  "fixed_object_model_defaults": {
+    "closet": [
+      {
+        "model": "3dw.e05be650930e7eadab9ab77fc8888129",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_wall": false,
+        "fit_box": true,
+        "clamp_clearance": 0.32,
+        "hole_sized": false,
+        "closest_wall_sized": false,
+        "dx": 2.67,
+        "dz": 0.63
+      },
+      {
+        "model": "3dw.d0af907a612856e964b62a9cc93b56f5",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.33,
+        "hole_sized": false,
+        "dx": 2.84,
+        "dz": 0.66
+      },
+      {
+        "model": "3dw.8fa86c85b7985962598f1102685df4cd",
+        "ratio": "wide",
+        "fit_box": true,
+        "face_hole": false,
+        "clamp_clearance": 0.25,
+        "hole_sized": false,
+        "dx": 2.69,
+        "dz": 0.51
+      },
+      {
+        "model": "3dw.891e56eed3fe1debeca22c501ad0a77a",
+        "ratio": "wide",
+        "fit_box": true,
+        "face_hole": false,
+        "clamp_clearance": 0.26,
+        "hole_sized": false,
+        "dx": 2.79,
+        "dz": 0.53
+      },
+      {
+        "model": "3dw.cb48ec828b688a78d747fd5e045d7490",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.27,
+        "hole_sized": false,
+        "dx": 1.65,
+        "dz": 0.54
+      },
+      {
+        "model": "3dw.581c8baea2ec1161e8109480f4780398",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.26,
+        "hole_sized": false,
+        "dx": 0.70,
+        "dz": 0.53
+      },
+      {
+        "model": "3dw.f37b164e168b906266b2a0039538971b",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.31,
+        "hole_sized": false,
+        "dx": 1.6,
+        "dz": 0.62
+      },
+      {
+        "model": "3dw.8af204f53bc871a2c05575120a46cd3b",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_clearance": 0.25,
+        "hole_sized": false,
+        "fit_box": true,
+        "dx": 2.19,
+        "dz": 0.51
+      },
+      {
+        "model": "3dw.6bc563f58609b9b03d2f363f359bcd87",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_clearance": 0.31,
+        "fit_box": true,
+        "hole_sized": false,
+        "dx": 1.99,
+        "dz": 0.62
+      },
+      {
+        "model": "3dw.dce192a69ce479e081255bc546ed0fe3",
+        "ratio": "wide",
+        "fit_box": true,
+        "face_hole": false,
+        "clamp_clearance": 0.21,
+        "hole_sized": false,
+        "dx": 2.00,
+        "dz": 0.43
+      },
+      {
+        "model": "3dw.dbdd6dfdd0f45546143116f3f58e0ed6",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.32,
+        "hole_sized": false,
+        "dx": 2.42,
+        "dz": 0.65
+      },
+      {
+        "model": "3dw.b948d040f628be703b2ccdfb0eba6a5",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.35,
+        "hole_sized": false,
+        "dx": 1.63,
+        "dz": 0.71
+      },
+      {
+        "model": "3dw.22019bf210707c9d7155483601ac0c56",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_clearance": 0.28,
+        "hole_sized": false,
+        "fit_box": true,
+        "dx": 2.90,
+        "dz": 0.57
+      },
+      {
+        "model": "3dw.329f80229edd920a82ef94da039e491f",
+        "ratio": "wide",
+        "face_hole": false,
+        "fit_box": true,
+        "clamp_clearance": 0.31,
+        "hole_sized": false,
+        "dx": 1.94,
+        "dz": 0.62
+      },
+      {
+        "model": "3dw.67a8f59a0a0c38d652e1cf1a97b9a2c0",
+        "ratio": "wide",
+        "fit_box": true,
+        "face_hole": false,
+        "clamp_clearance": 0.31,
+        "hole_sized": false,
+        "dx": 1.99,
+        "dz": 0.63
+      },
+      {
+        "model": "3dw.32b73b01884a7125b17bba743cf94830",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_clearance": 0.28,
+        "hole_sized": false,
+        "fit_box": true,
+        "dx": 1.35,
+        "dz": 0.55
+      },
+      {
+        "model": "3dw.ac4e80d4ad2d0ce98060a555dcc63fd1",
+        "ratio": "wide",
+        "fit_box": true,
+        "face_hole": false,
+        "clamp_clearance": 0.33,
+        "hole_sized": false,
+        "dx": 2.11,
+        "dz": 0.67
+      }
+    ],
+    "washing_basin": [
+      {
+        "model": "3dw.72863e1ef3c0a6fbdd5cf959690bb73f",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_wall": true,
+        "clamp_clearance": 0.25,
+        "dx": 0.60,
+        "dz": 0.51,
+        "allowed_rooms": null
+      },
+      {
+        "model": "3dw.43718f23c7d9083d7eee615e75bc3b77",
+        "ratio": "wide",
+        "face_hole": false,
+        "clamp_wall": true,
+        "clamp_clearance": 0.32,
+        "dx": 0.60,
+        "dz": 0.61,
+        "closest_wall_sized": true,
+        "allowed_rooms": [
+          "Kitchen",
+          "Reception",
+          "Bedroom"
+        ]
+      }
+    ],
+    "bathtub": [
+      {
+        "model": "3dw.a490b13c799e605e54d7082b34825ef0",
+        "ratio": "wide",
+        "face_hole": false,
+        "dx": 1.52,
+        "dz": 0.76,
+        "clamp_wall": true,
+        "closest_wall_sized": true,
+        "clamp_clearance": 0.38,
+        "center_closest_wall": false
+      }
+    ],
+    "toilet": [
+      {
+        "model": "3dw.b808d1b9b4f187fd456cbf78e1e89022",
+        "ratio": "narrow",
+        "face_hole": false,
+        "dx": 0.42,
+        "dy": 0.68,
+        "clamp_wall": true,
+        "clamp_clearance": 0.34
+      }
+    ],
+    "special": [],
+    "cooking_counter": [
+      {
+        "model": "3dw.3111b3a7c5cb9355a28b16ad9ca2f28",
+        "ratio": "wide",
+        "face_hole": false,
+        "dx": 0.85,
+        "dz": 0.7,
+        "clamp_wall": true,
+        "clamp_clearance": 0.35,
+        "closest_wall_sized": true,
+        "min_scale_x": 0.8,
+        "min_scale_z": 0.8,
+        "uniform_scale": false
+      }
+    ]
+  },
+  "hole_model_defaults": {
+    "Door": [
+      {
+        "model": "3dw.17eeb5a190381a944eb55f2e571ff6e2",
+        "length": 1.02,
+        "hole_max_y": 2.21,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          false,
+          true
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.bdf128e71e0a63befffbefa91d5552d",
+        "length": 0.85,
+        "hole_max_y": 2.10,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.d6dbfea345baaf77ee74fd97a86f9314",
+        "length": 0.97,
+        "hole_max_y": 2.03,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.3f6d2b9e756d686257185761dbd67a8b",
+        "length": 2.39,
+        "hole_max_y": 2.08,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.3b695d1d71b5f58d57185761dbd67a8b",
+        "length": 3.15,
+        "hole_max_y": 2.55,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.f20ffd0354f1dc2657185761dbd67a8b",
+        "length": 1.65,
+        "hole_max_y": 2.49,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.16b65c0f245378f857185761dbd67a8b",
+        "length": 2.54,
+        "hole_max_y": 2.14,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.3f6d2b9e756d686257185761dbd67a8b",
+        "length": 2.39,
+        "hole_max_y": 2.08,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.3b695d1d71b5f58d57185761dbd67a8b",
+        "length": 3.15,
+        "hole_max_y": 2.55,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.16b65c0f245378f857185761dbd67a8b",
+        "length": 2.54,
+        "hole_max_y": 2.14,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.f20ffd0354f1dc2657185761dbd67a8b",
+        "length": 1.65,
+        "hole_max_y": 2.49,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.c5d9ed2b0ce7f82057185761dbd67a8b",
+        "length": 1.38,
+        "hole_max_y": 2.55,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.24a8a20aef1ca7c6ba07b76928a62991",
+        "length": 0.97,
+        "hole_max_y": 2.29,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.4e18893f3ea94804a6669e0b4afef092",
+        "length": 0.97,
+        "hole_max_y": 2.01,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.427ac11a0631bedfa35a7666f0cfa5bb",
+        "length": 1.6,
+        "hole_max_y": 2.13,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          false
+        ],
+        "bathroom": [
+          false
+        ]
+      },
+      {
+        "model": "3dw.e1243519f6939b30601e9679255885a5",
+        "length": 0.96,
+        "hole_max_y": 2.21,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.da233216bc6e4381ef91b95315ed32e6",
+        "length": 1.76,
+        "hole_max_y": 2.23,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true,
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.49b70aec665473c562b94a426b460320",
+        "length": 1.31,
+        "hole_max_y": 2.51,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true,
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.2143326f203c8d0c2d7a27ffaafaaddb",
+        "length": 0.96,
+        "hole_max_y": 2.09,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true,
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.49600ad1eb1435d957f15fc9385a8a01",
+        "length": 1.08,
+        "hole_max_y": 2.09,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true,
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "bathroom": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.16b65c0f245378f857185761dbd67a8b",
+        "length": 2.54,
+        "hole_max_y": 2.14,
+        "hole_min_y": 0,
+        "lift": 0,
+        "hole_type": "Door",
+        "entrance": [
+          true
+        ],
+        "bathroom": [
+          false
+        ],
+        "balcony": [
+          true,
+          false
+        ]
+      }
+    ],
+    "Window": [
+      {
+        "model": "3dw.4893b0140ec2c2b05845c3464c76e71d",
+        "length": 1.1,
+        "hole_max_y": 2.2,
+        "hole_min_y": 1.4,
+        "lift": 1.4,
+        "hole_type": "Window",
+        "bathroom": [
+          true
+        ],
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          true,
+          false
+        ]
+      },
+      {
+        "model": "3dw.ce1e91c9e572608ef3e04d48ebcc1166",
+        "length": 1.15,
+        "hole_max_y": 2.19,
+        "hole_min_y": 1.0,
+        "lift": 1.0,
+        "hole_type": "Window",
+        "bathroom": [
+          false
+        ],
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "rotate180": true
+      },
+      {
+        "model": "3dw.cc9b086cf5dcd3cdfb42fe3b0015a2f4",
+        "length": 1.01,
+        "hole_max_y": 2.65,
+        "hole_min_y": 1.0,
+        "lift": 1.0,
+        "hole_type": "Window",
+        "bathroom": [
+          false
+        ],
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "rotate180": true
+      },
+      {
+        "model": "3dw.9e6ee02ec409853f74be49c6036df62c",
+        "length": 1.29,
+        "hole_max_y": 2.10,
+        "hole_min_y": 1.0,
+        "lift": 1.0,
+        "hole_type": "Window",
+        "bathroom": [
+          false
+        ],
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "rotate180": true
+      },
+      {
+        "model": "3dw.8999eaec900e6f9df3e04d48ebcc1166",
+        "length": 1.70,
+        "hole_max_y": 2.20,
+        "hole_min_y": 1.0,
+        "lift": 1.0,
+        "hole_type": "Window",
+        "bathroom": [
+          false
+        ],
+        "entrance": [
+          true
+        ],
+        "balcony": [
+          true,
+          false
+        ],
+        "rotate180": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,187 @@
+.container {
+    width: 1200px;
+    margin: auto;
+    
+}
+div.header h1 {
+    text-align: center;
+    color: rgb(45, 51, 56);
+}
+div.header{
+    border-bottom: lightgray solid 1px;
+}
+
+div.header ul {
+    margin: auto;
+    width: 900px;
+    text-align: center;
+    padding-inline-start: 0;
+}
+
+div.header span{
+    text-align: center;
+    color: slategray;
+    margin: 5px;
+    display: block
+}
+
+
+div.header li{
+    display: inline;
+    margin: 20px;
+}
+
+a {
+    color: orange;
+    text-decoration: none;
+}
+
+.intro-image img{
+    width: 50%;
+    margin: auto;
+    display: block;
+}
+
+.intro-image label{
+    text-align: center;
+    display: block;
+}
+
+
+div.abstract{
+    border-top: lightgray solid 1px;
+    display: block;
+    margin-top: 20px;
+}
+div.abstract p{
+    text-align: justify;
+}
+
+div.video{
+    border-top: lightgray solid 1px;
+    display: block;
+    margin-top: 20px;
+}
+
+div.video iframe{
+    margin: auto;
+    display: block;
+}
+
+div.results {
+    display: block;
+    margin-top: 20px;
+}
+
+div.section h2{
+    color:slategray;
+}
+
+div.results-table {
+    overflow-x: auto;
+}
+
+tr.double-border-bottom td{
+    border-bottom: 3px double #ddd;
+}
+
+tr.border-bottom td{
+    border-bottom: 1px solid #ddd;
+}
+
+th.border-bottom{
+    border-bottom: 1px solid #ddd;
+}
+
+tr.border-bottom th{
+    border-bottom: 1px solid #ddd;
+}
+
+th.border-right {
+    border-right: 1px solid #ddd;
+}
+
+td.border-right {
+    border-right: 1px solid #ddd;
+}
+
+div.results table {  
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+}
+div.results table, td, th {  
+    text-align: left;
+}
+
+div.results th {
+    text-align: center;
+    /* border-bottom: 1px solid #ddd; */
+    /* border-collapse: collapse; */
+}
+  
+div.results th, td {
+    padding: 8px;
+}
+div.results td {
+    text-align: right;
+}
+div.results tr {
+    height:50px;
+}
+
+tr.table-header {
+    background-color: aliceblue;
+}
+
+div.link-bar{
+    /* border-top: lightgray solid 1px; */
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+table.data-table {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+table.data-table td {
+    width:33%;
+    /* background-color: aliceblue; */
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: top;
+    padding: 15 px;
+}
+img.stationary-textures-dataset {
+    height: 150px; 
+    margin:5px;
+}
+img.smt-textures-dataset {
+    height: 170px; 
+    margin:5px;
+}
+img.rent-3d-dataset {
+    height: 180px; 
+    margin:5px;
+}
+img.stationary-textures-dataset {
+    height: 150px; 
+    margin:5px;
+}
+table.data-table h3 {
+    color: slategray;
+}
+
+.quote {
+    margin: 0;
+    background: #eee;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .quote figcaption,
+  .quote blockquote {
+    margin: 10px;
+  }
