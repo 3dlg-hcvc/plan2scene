@@ -7,7 +7,7 @@ __Plan2Scene: Converting floorplans to 3D scenes__
 [Madhawa Vidanapathirana](https://github.com/madhawav), [Qirui Wu](), [Yasutaka Furukawa](), [Angel X. Chang](https://github.com/angelxuanchang)
 , [Manolis Savva](https://github.com/msavva)
 
-[[Paper](), [Project Page](https://3dlg-hcvc.github.io/plan2scene/)]
+[[Paper](https://arxiv.org/abs/2106.05375), [Project Page](https://3dlg-hcvc.github.io/plan2scene/)]
 
 ![Task Overview](docs/img/task-overview.png)
 In the Plan2Scene task, we produce a textured 3D mesh of a residence from a floorplan and set of photos.
@@ -47,7 +47,7 @@ export PYTHONPATH=./code/src
 
 ## Data
 1) Rent3D++ dataset
-    1. Download and copy the Rent3D++ dataset to the `[PROJECT_ROOT]/data` directory. The data organization is [described here](docs/md/rent3dpp_data_organization.md).
+    1. Download and copy the [Rent3D++ dataset](https://forms.gle/mKAmnrzAm3LCK9ua6) to the `[PROJECT_ROOT]/data` directory. The data organization is [described here](docs/md/rent3dpp_data_organization.md).
     2. [Optional] We have provided 3D scenes pre-populated with CAD models of objects. 
        If you wish to re-populate these scenes using the _Object Placement_ approach we use, [follow the instructions here](docs/md/place_cad_models.md).    
     3. To replicate our results, you should use the pre-extracted crops we provide. 
