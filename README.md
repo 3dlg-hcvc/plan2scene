@@ -103,14 +103,14 @@ Pretrained models are available [here](./docs/md/pretrained_models.md).
    ```
 3) Generate .scene.json files with embedded textures using [embed_textures.py](code/scripts/plan2scene/postprocessing/embed_textures.py).
    A scene.json file describes the 3D geometry of a house. 
-   It can be previewed via a browser using the 'scene-viewer' of [SmartScenesToolkit]() (You will have to clone and build the SmartScenesToolkit).
+   It can be previewed via a browser using the 'scene-viewer' of [SmartScenesToolkit](https://github.com/smartscenes/sstk) (You will have to clone and build the SmartScenesToolkit).
    ```bash
    # For test data without simulating photo unobservations.
    python code/scripts/plan2scene/postprocessing/embed_textures.py ./data/processed/gnn_prop/test/drop_0.0/archs ./data/processed/gnn_prop/test/drop_0.0/tileable_texture_crops test --drop 0.0
    # scene.json files are created in the ./data/processed/gnn_prop/test/drop_0.0/archs directory.
    ```
 4) Render .scene.json files as .pngs using [render_house_jsons.py](code/scripts/plan2scene/render_house_jsons.py).
-    - Download and build the [SmartScenesToolkit]().
+    - Download and build the [SmartScenesToolkit](https://github.com/smartscenes/sstk).
     - Rename `./conf/render-example.json` to `./conf/render.json` and update its fields to point to scene-toolkit.
     - Run the following command to generate previews.
        ```bash
