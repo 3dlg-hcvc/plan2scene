@@ -1,7 +1,7 @@
 # Scene JSON Format
 In this document, we explain the scene.json format used to describe a floorplan vector. This is an extension of the scene state format used by the [smart scene toolkit](https://github.com/smartscenes/sstk/wiki). You can refer to the Rent3D++ dataset for sample scene.json files without textures. You can find a sample scene.json file with textures [here](./sample_scene.json.md).
 
-A scene.json format contains the following information.
+A scene.json file contains the following information.
  - Walls are segments with two endpoints with height and depth. A wall is assigned to a room using a room id or a list of room ids.
  - Walls have holes (cutouts where windows/doors are placed) specified by a 2D bounding box on the wall surface. Optionally, the object instance id of the relevant window/door model may also be specified. 
  - Ceiling, floor, and ground surfaces are specified as polygons, each specified by an array of points. Each surface is assigned to a room using a room id.
