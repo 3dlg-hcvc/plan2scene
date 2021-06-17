@@ -15,7 +15,7 @@ The data organization is as follows.
 ## archs_no_objects
 This directory contains multiple scene.json files, each describing the architecture of a house using the scene.json format.
 The filename is the house_key used to uniquely identify that house.
-For details about the scene.json format, please refer to the [Smart Scenes Toolkit](https://github.com/smartscenes/sstk).
+For details about the scene.json format, refer to [this doc](./scene_json_format.md).
 
 The scene.json files follow the convention of considering the Y-axis as the up direction.
 
@@ -56,6 +56,8 @@ Each photoroom.csv file has the following columns.
 This directory has scene.json files, each describing the architecture of a house having populated with fixed objects.
 The filename is the house_key used to uniquely identify that house.
 You can generate full_archs from achs_no_objects and object_aabbs using the provided script.
+
+For details about the scene.json format, refer to [this doc](./scene_json_format.md).
 
 ## surface_crops
 Contains rectified surface crops extracted from Rent3D photos. These are the crops used in our paper evaluations.
