@@ -59,7 +59,7 @@ While the above information is sufficient to preview a scene.json file using [sm
                 "Floor": {
                     "depth": 0.05
                 }
-            }
+            },
             "elements": [                               // List of architectural elements
                 {                                       // Example ceiling surface
                     "id": "room_0_23ac_c",              // Unique id of the element.
