@@ -8,7 +8,7 @@ from plan2scene.config_manager import ConfigManager
 from plan2scene.crop_select.util import fill_textures
 from plan2scene.texture_gen.predictor import TextureGenPredictor
 from plan2scene.texture_gen.utils.io import load_conf_eval
-from plan2scene.texture_prop.TexturePropPredictor import TexturePropPredictor
+from plan2scene.texture_prop.predictor import TexturePropPredictor
 from plan2scene.texture_prop.graph_generators import InferenceHGG
 from plan2scene.texture_prop.houses_dataset import HouseDataset
 from plan2scene.texture_prop.utils import get_graph_generator, update_embeddings, clear_predictions
