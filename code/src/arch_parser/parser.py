@@ -243,20 +243,13 @@ def parse_object_jsons(object_jsons: list) -> list:
     return cad_models
 
 
-def parse_scene_json_from_file(scene_json_path: str, photoroom_csv_path: str) -> House:
+def parse_scene_json(scene_json: dict, photoroom_df: pd.DataFrame) -> House:
     """
-    Parses a scene.json file from disk.
-    :param scene_json_path: Path to scene.json file.
-    :param photoroom_csv_path: Path photoroom.csv file.
+    Parses a scene.json file from memory.
+    :param scene_json: Scene json as a dictionary
+    :param photoroom_df: Photo room data-frame.
     :return: Parsed house.
     """
-    with open(scene_json_path) as f:
-        scene_json = json.load(f)
-    photoroom_df = None
-    if photoroom_csv_path is not None:
-        with open(photoroom_csv_path) as f:
-            photoroom_df = pd.read_csv(f)
-
     assert scene_json["format"] == "sceneState"
 
     arch_json = scene_json["scene"]["arch"]
@@ -276,6 +269,23 @@ def parse_scene_json_from_file(scene_json_path: str, photoroom_csv_path: str) ->
             # Just pass through
             result.scene_extra_metadata[k] = v
     return result
+
+
+def parse_scene_json_from_file(scene_json_path: str, photoroom_csv_path: str) -> House:
+    """
+    Parses a scene.json file from disk.
+    :param scene_json_path: Path to scene.json file.
+    :param photoroom_csv_path: Path photoroom.csv file.
+    :return: Parsed house.
+    """
+    with open(scene_json_path) as f:
+        scene_json = json.load(f)
+    photoroom_df = None
+    if photoroom_csv_path is not None:
+        with open(photoroom_csv_path) as f:
+            photoroom_df = pd.read_csv(f)
+
+    return parse_scene_json(scene_json, photoroom_df)
 
 
 def parse_house_json_file(house_json_path: str, photoroom_csv_path: str) -> House:
