@@ -7,7 +7,7 @@ __Plan2Scene: Converting floorplans to 3D scenes__
 [Madhawa Vidanapathirana](https://github.com/madhawav), [Qirui Wu](), [Yasutaka Furukawa](), [Angel X. Chang](https://github.com/angelxuanchang)
 , [Manolis Savva](https://github.com/msavva)
 
-[[Paper](https://arxiv.org/abs/2106.05375), [Project Page](https://3dlg-hcvc.github.io/plan2scene/)]
+[[Paper](https://arxiv.org/abs/2106.05375), [Project Page](https://3dlg-hcvc.github.io/plan2scene/), [Google Colab Demo](https://colab.research.google.com/drive/1lDkbfIV0drR1o9D0WYzoWeRskB91nXHq?usp=sharing)]
 
 ![Task Overview](docs/img/task-overview.png)
 In the Plan2Scene task, we produce a textured 3D mesh of a residence from a floorplan and set of photos.
@@ -16,9 +16,9 @@ In the Plan2Scene task, we produce a textured 3D mesh of a residence from a floo
 1) We use a conda environment initialized as follows.
    ```bash
    # Python 3.6 and PyTorch 1.6
-   conda create -n plan2scene python=3.6
+   conda create -n plan2scene python=3.6 -y
    conda activate plan2scene
-   conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
+   conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch -y
    pip install -r code/requirements.txt
    
    # Install the cuda_noise package, which we have copied from the neural texture project: https://github.com/henzler/neuraltexture.
