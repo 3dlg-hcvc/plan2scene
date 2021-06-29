@@ -13,28 +13,7 @@ __Plan2Scene: Converting floorplans to 3D scenes__
 In the Plan2Scene task, we produce a textured 3D mesh of a residence from a floorplan and set of photos.
 
 ## Dependencies
-1) We use a conda environment initialized as follows.
-   ```bash
-   # Python 3.6 and PyTorch 1.6
-   conda create -n plan2scene python=3.6 -y
-   conda activate plan2scene
-   conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch -y
-   pip install -r code/requirements.txt
-   
-   # Install the cuda_noise package, which we have copied from the neural texture project: https://github.com/henzler/neuraltexture.
-   cd code/src/plan2scene/texture_gen/custom_ops/noise_kernel
-   python setup.py install
-   cd ../../../../../../
-   
-   # Install PyTorch Geometric
-   export CUDA=cu102 # Specify CUDA version used by PyTorch. Refer https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html for details.
-   export TORCH=1.6.0
-   pip install torch-scatter -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html --no-cache
-   pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html --no-cache
-   pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html --no-cache
-   pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html --no-cache
-   pip install torch-geometric --no-cache
-   ```
+1) We use a conda environment initialized as [described here](./docs/md/conda_env_setup.md).
 2) Setup the `command line library` of [Embark Studios texture-synthesis](https://github.com/EmbarkStudios/texture-synthesis#command-line-binary) project. 
     1) You can download a pre-built binary [available here](https://github.com/EmbarkStudios/texture-synthesis/releases). Alternatively, you may build from the source.
     2) Download the seam mask [available here](https://github.com/EmbarkStudios/texture-synthesis/blob/main/imgs/masks/1_tile.jpg).   
