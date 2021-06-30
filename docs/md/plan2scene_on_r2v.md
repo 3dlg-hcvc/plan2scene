@@ -1,5 +1,5 @@
 ## Using Plan2Scene with Raster-to-Vector outputs
-1) Convert raster to vector outputs to the scene.json format using the [R2V-to-Plan2Scene tool]().
+1) Convert raster to vector outputs to the scene.json format using the [R2V-to-Plan2Scene tool](https://github.com/3dlg-hcvc/r2v-to-plan2scene).
 
 2) [Optional] To place CAD models for doors, windows and fixed objects, use the scripts [place_hole_cad_models.py](https://github.com/3dlg-hcvc/plan2scene/blob/main/code/scripts/plan2scene/place_hole_cad_models.py) and [place_object_cad_models.py](https://github.com/3dlg-hcvc/plan2scene/blob/main/code/scripts/plan2scene/place_object_cad_models.py).
     ```bash
