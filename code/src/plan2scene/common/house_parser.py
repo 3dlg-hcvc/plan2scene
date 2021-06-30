@@ -68,12 +68,13 @@ def map_surface_crops_to_houses(conf: ConfigManager, houses: dict) -> None:
         map_surface_crops_to_house(conf, house)
 
 
-def save_arch(conf: ConfigManager, house: House, arch_path: str) -> None:
+def save_arch(conf: ConfigManager, house: House, arch_path: str, texture_both_sides_of_walls) -> None:
     """
     Saves a house as an arch.json file or a scene.json file.
     :param conf: Config Manager
     :param house: House to save
     :param arch_path: Save path. We determine save format based on extension specified here.
+    :param texture_both_sides_of_walls: Both sides of all walls are textured, including walls with only one interior side. The interior side texture is copied to exterior side.
     :return:
     """
     save_format = PreferredFormat.NONE
@@ -86,9 +87,9 @@ def save_arch(conf: ConfigManager, house: House, arch_path: str) -> None:
         arch_path += save_format.extension
 
     if save_format == PreferredFormat.ARCH_JSON:
-        house_json = house.to_arch_json()
+        house_json = house.to_arch_json(texture_both_sides_of_walls=texture_both_sides_of_walls)
     elif save_format == PreferredFormat.SCENE_JSON:
-        house_json = house.to_scene_json()
+        house_json = house.to_scene_json(texture_both_sides_of_walls=texture_both_sides_of_walls)
     else:
         assert False, "Save format unspecified"
 
@@ -264,25 +265,3 @@ def load_houses_with_embeddings(conf: ConfigManager, data_split: str, drop_fract
                                       osp.join(embeddings_path, house_key + ".json"))
 
     return houses
-
-
-if __name__ == "__main__":
-    import argparse
-
-    conf = ConfigManager()
-    parser = argparse.ArgumentParser(description="Sample House Parser")
-    parser.add_argument("split", help="train/val/test")
-
-    conf.add_args(parser)
-    args = parser.parse_args()
-    conf.process_args(args)
-
-    split = args.split
-    house_keys = conf.get_data_list(split)
-
-    houses = parse_houses(conf, house_keys, house_path_spec=conf.data_paths.arch_path_spec.format(split=split,
-                                                                                                  house_key="{house_key}"),
-                          photoroom_csv_path_spec=conf.data_paths.photoroom_path_spec.format(split=split,
-                                                                                             drop_fraction=conf.drop_fraction,
-                                                                                             house_key="{house_key}"))
-    logging.info("Loaded houses: {houses}".format(houses=str(houses)))

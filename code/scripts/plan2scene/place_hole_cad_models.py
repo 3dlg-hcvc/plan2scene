@@ -4,6 +4,7 @@ from arch_parser.models.cad_model import CADModel
 from arch_parser.models.hole import Hole
 from arch_parser.models.house import House
 from arch_parser.models.room import Room
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 from arch_parser.parser import parse_house_json_file
 from arch_parser.serializer import serialize_scene_json
 from plan2scene.house_gen.geom_util import hole_to_line, get_transform
@@ -12,6 +13,7 @@ import os.path as osp
 import os
 import json
 import math
+
 
 def get_hole_model(conf: ConfigManager, hole_type, length, adjacent_rooms):
     """
@@ -59,7 +61,9 @@ def generate_hole_cad_placements(conf: ConfigManager, house: House, start_index:
     index = start_index
     for room_key, room in house.rooms.items():
         assert isinstance(room, Room)
-        for i_wall, wall in enumerate(room.walls):
+        for i_wall, wall_assignment in enumerate(room.walls):
+            assert isinstance(wall_assignment, WallRoomAssignment)
+            wall = wall_assignment.wall
             new_wall_width = math.sqrt((wall.p2[1] - wall.p1[1]) ** 2 + (wall.p2[0] - wall.p1[0]) ** 2)
 
             for hole_index, hole in enumerate(wall.holes):
@@ -126,7 +130,7 @@ def generate_hole_cad_placements(conf: ConfigManager, house: House, start_index:
     return cad_models, index
 
 
-def process_house(conf: ConfigManager, house:House) -> None:
+def process_house(conf: ConfigManager, house: House) -> None:
     """
     Place hole CAD models for the given house.
     :param conf: Config Manager
@@ -148,6 +152,8 @@ if __name__ == "__main__":
     parser.add_argument("output_path", help="Path to save cad model placed scene.json files.")
     parser.add_argument("house_jsons_path", help="Path to scene.json files without objects.")
     parser.add_argument("--remove-existing-objects", default=False, action="store_true", help="Specify true to clear any existing CAD models.")
+    parser.add_argument("--texture-internal-walls-only", action="store_true", default=False,
+                        help="Specify flag to ommit textures on external side of perimeter walls.")
 
     args = parser.parse_args()
     conf.process_args(args, output_is_dir=True)
@@ -155,9 +161,10 @@ if __name__ == "__main__":
     output_path = args.output_path
     houses_path = args.house_jsons_path
     remove_existing_objects = args.remove_existing_objects
+    texture_internal_walls_only = args.texture_internal_walls_only
 
     house_files = os.listdir(houses_path)
-    house_files = [a for a in house_files if osp.splitext(a)[1] == ".json"]
+    house_files = [a for a in house_files if a.endswith(".scene.json")]
 
     for i, house_file in enumerate(house_files):
         logging.info("[{i}/{count}]Processing {house_file}".format(i=i, count=len(house_files), house_file=house_file))
@@ -167,7 +174,7 @@ if __name__ == "__main__":
             house.cad_models.clear()
 
         process_house(conf, house)
-        scene_json = serialize_scene_json(house)
+        scene_json = serialize_scene_json(house, texture_both_sides_of_walls=not texture_internal_walls_only)
 
         save_file_name = None
         if house_file.endswith(".arch.json"):

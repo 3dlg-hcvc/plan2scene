@@ -2,6 +2,7 @@ from PIL import Image
 
 from arch_parser.models.floor import Floor
 from arch_parser.models.ceiling import Ceiling
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 
 
 class Room:
@@ -104,6 +105,9 @@ class Room:
 
     @property
     def walls(self):
+        """
+        Return list of wall assignments.
+        """
         return self._walls
 
     def get_centroid(self):
@@ -115,13 +119,14 @@ class Room:
             count += 2
         return total_x / count, total_y / count
 
-    def add_wall(self, wall):
+    def add_wall(self, wall: WallRoomAssignment):
+        assert isinstance(wall, WallRoomAssignment)
         self._walls.append(wall)
 
     def get_polyline(self):
         points = []
-        for i in range(len(self._walls)):
-            points.append(self._walls[i].p1)
+        for i in range(len(self._floor.points)):
+            points.append(self._floor.points[i])
         return points
 
     def __str__(self):

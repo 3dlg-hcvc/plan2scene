@@ -9,6 +9,7 @@ from arch_parser.models.hole import Hole
 from arch_parser.models.house import House
 from arch_parser.models.room import Room
 from arch_parser.models.wall import Wall
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 from arch_parser.preferred_format import PreferredFormat
 from PIL import Image
 
@@ -124,7 +125,6 @@ def parse_wall_element(element_json: dict, arch_json: dict, house: House) -> Non
     :param arch_json: Arch json
     :param house: House that gets updated.
     """
-    room_id = element_json["roomId"]
     wall_points = [tuple(p) for p in element_json["points"]]
     assert len(wall_points) == 2
 
@@ -134,13 +134,21 @@ def parse_wall_element(element_json: dict, arch_json: dict, house: House) -> Non
     for hole_json in element_json["holes"]:
         parse_hole(hole_json, wall)
 
-    room = house.rooms[room_id]
-    assert isinstance(room, Room)
-    if len(element_json["materials"]) > 0:
-        # Note that outer texture is ignored.
-        room.wall_texture = parse_material(element_json["materials"][0], arch_json)
+    room_ids = element_json["roomId"]
+    if not isinstance(room_ids, list):
+        # Convert to two rooms per wall format
+        room_ids = [None, room_ids]
+    
+    for i, room_id in enumerate(room_ids):
+        if room_id is None:
+            continue
+        
+        room = house.rooms[room_id]
+        assert isinstance(room, Room)
+        if len(element_json["materials"]) > 0:
+            room.wall_texture = parse_material(element_json["materials"][i], arch_json)
 
-    house.rooms[room_id].walls.append(wall)
+        house.rooms[room_id].walls.append(WallRoomAssignment(wall, i))
 
 
 def parse_ceiling_element(element_json: dict, arch_json: dict, house: House) -> None:
@@ -300,22 +308,3 @@ def parse_house_json_file(house_json_path: str, photoroom_csv_path: str) -> Hous
     elif house_json_path.endswith(".scene.json"):
         return parse_scene_json_from_file(house_json_path, photoroom_csv_path)
     assert False
-
-
-if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Parses a house")
-    parser.add_argument("output_path", help="Output path")
-    parser.add_argument("arch_json_path", help="arch.json path")
-    parser.add_argument("photoroom_csv_path", help="photoroom.csv path")
-    args = parser.parse_args()
-
-    output_path = args.output_path
-
-    house = parse_house_json_file(args.arch_json_path, args.photoroom_csv_path)
-    from arch_parser.serializer import serialize_scene_json
-
-    with open(output_path, "w") as f:
-        json.dump(serialize_scene_json(house), f, indent=4)
-    print(json.dumps(serialize_scene_json(house), indent=4))

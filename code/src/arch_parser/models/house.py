@@ -4,6 +4,7 @@ from arch_parser.models.wall import Wall
 from PIL import Image, ImageDraw
 
 from collections.abc import Iterable
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 from arch_parser.preferred_format import PreferredFormat
 
 
@@ -75,8 +76,9 @@ class House:
         max_y = float("-inf")
         for room_id, room in self.rooms.items():
             assert isinstance(room, Room)
-            for wall in room.walls:
-                isinstance(wall, Wall)
+            for wall_assignment in room.walls:
+                assert isinstance(wall_assignment, WallRoomAssignment)
+                wall = wall_assignment.wall
                 for (x, _, y) in [wall.p1, wall.p2]:
                     min_x = min(x, min_x)
                     max_x = max(x, max_x)
@@ -115,7 +117,9 @@ class House:
 
         for room_id, room in self.rooms.items():
             assert isinstance(room, Room)
-            for wall in room.walls:
+            for wall_assignment in room.walls:
+                assert isinstance(wall_assignment, WallRoomAssignment)
+                wall = wall_assignment.wall
                 x1, y1 = scale(wall.p1)
                 x2, y2 = scale(wall.p2)
                 color = wall_color

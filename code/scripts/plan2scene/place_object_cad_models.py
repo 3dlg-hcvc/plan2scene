@@ -167,7 +167,7 @@ def get_object_json(obj: ObjectAnnotation, house: House, contained_room_id: str,
     :return: tuple (scene json entry for the object, index of next object)
     """
     # logging.info("Processing object: {object}".format(object=obj.type))
-    room_walls = house.rooms[contained_room_id].walls
+    room_walls = [a.wall for a in house.rooms[contained_room_id].walls]
 
     p = (obj.p1[0] + obj.p2[0]) / 2.0, (obj.p1[1] + obj.p2[1]) / 2.0
     dx = abs(obj.p1[0] - obj.p2[0])
@@ -360,7 +360,7 @@ def place_object_models(house: House, object_annotations: list, scene_json, hous
     new_object_jsons = []
     for obj in object_annotations:
         contained_rooms = [a for a, v in house.rooms.items() if obj in room_key_objects_map[v.room_id]]
-        assert len(contained_rooms) == 1
+        assert len(contained_rooms) == 1, len(contained_rooms)
 
         object_json, index = get_object_json(obj, house, contained_rooms[0], house_gen_conf, index)
         if object_json is not None:
@@ -399,6 +399,7 @@ if __name__ == "__main__":
     parser.add_argument("house_jsons_path", help="Path to scene.jsons without objects.")
     parser.add_argument("objectabbb_jsons_path", help="Path to objectavv,json files.")
     parser.add_argument("--remove-existing-objects", default=False, action="store_true")
+    parser.add_argument("--texture-internal-walls-only", action="store_true", default=False, help="Specify flag to ommit textures on external side of perimeter walls.")
 
     args = parser.parse_args()
     conf.process_args(args, output_is_dir=True)
@@ -407,9 +408,10 @@ if __name__ == "__main__":
     houses_path = args.house_jsons_path
     object_annotations_path = args.objectabbb_jsons_path
     remove_existing_objects = args.remove_existing_objects
+    texture_internal_walls_only = args.texture_internal_walls_only
 
     house_files = os.listdir(houses_path)
-    house_files = [a for a in house_files if osp.splitext(a)[1] == ".json"]
+    house_files = [a for a in house_files if a.endswith(".scene.json")]
 
     for i, house_file in enumerate(house_files):
         logging.info("[{i}/{count}]Processing {house_file}".format(i=i, count=len(house_files), house_file=house_file))
@@ -420,7 +422,7 @@ if __name__ == "__main__":
         if remove_existing_objects:
             house.cad_models.clear()
 
-        scene_json = serialize_scene_json(house)
+        scene_json = serialize_scene_json(house, texture_both_sides_of_walls=not texture_internal_walls_only)
         place_object_models(house, object_annotations, scene_json, house_gen_conf=conf.house_gen)
 
         # Save
@@ -433,3 +435,4 @@ if __name__ == "__main__":
             f=osp.join(output_path, save_file_name))
         with open(osp.join(output_path, save_file_name), "w") as f:
             json.dump(scene_json, f, indent=4)
+        logging.info("Saved {file}".format(file=save_file_name))

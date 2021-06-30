@@ -5,6 +5,7 @@ pandas
 pyyaml
 orderedattrdict
 kornia==0.2.0
+shapely # Used by place_object_cad_models script
 tensorboard
 git+https://github.com/sbrisard/moisan2011.git@master # Used by the freq metric
 pytorch-fid==0.1.1
