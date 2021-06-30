@@ -65,13 +65,16 @@ def generate_hole_json(hole: Hole) -> dict:
     return hole_json
 
 
-def generate_wall_json(wall: Wall, room_id: str, material: dict) -> dict:
+def generate_wall_json(wall: Wall, room_id: str, inner_surface_index:int, material: dict, outer_material: dict, texture_both_sides:bool) -> dict:
     """
-    Generate json for a wall of a house
-    :param wall:
-    :param room_id:
-    :param material:
-    :return:
+    Generates a json describing wall.
+    :param wall: Wall described
+    :param room_id: Assigned room
+    :param inner_surface_index: Index of the side facing the assigned room
+    :param material: Material assigned to the inner surface to the room.
+    :param outer_material: Material to use for the outer surface to the room.
+    :param texture_both_sides: Specify true to use the same material for both sides.
+    :return: Wall json
     """
 
     hole_jsons = []
@@ -79,19 +82,37 @@ def generate_wall_json(wall: Wall, room_id: str, material: dict) -> dict:
     for hole_index, hole in enumerate(wall.holes):
         hole_jsons.append(generate_hole_json(hole))
 
-    surface1_material = copy.deepcopy(material)
-    surface1_material["name"] = "surface1"
+    if texture_both_sides:
+        # Apply same material to both sides
+        surface1_material = copy.deepcopy(material)
+        surface1_material["name"] = "surface1"
 
-    surface2_material = copy.deepcopy(material)
-    surface2_material["name"] = "surface2"
+        surface2_material = copy.deepcopy(material)
+        surface2_material["name"] = "surface2"
+        materials = [surface1_material, surface2_material]
+    else:
+        # Apply outer material to both sides
+        surface1_material = copy.deepcopy(outer_material)
+        surface1_material["name"] = "surface1"
+
+        surface2_material = copy.deepcopy(outer_material)
+        surface2_material["name"] = "surface2"
+
+        # Update inner side with inner material
+        materials = [surface1_material, surface2_material]
+        materials[inner_surface_index] = copy.deepcopy(material)
+        materials[inner_surface_index]["name"] = "surface%d" % inner_surface_index
+
+    room_id_list = [None, None]
+    room_id_list[inner_surface_index] = room_id
 
     wall_json = {
-        "roomId": room_id,
+        "roomId": room_id_list,
         "id": wall.wall_id,
         "type": "Wall",
         "points": [wall.p1, wall.p2],
         "holes": hole_jsons,
-        "materials": [surface1_material, surface2_material],  # inner and outer material
+        "materials": materials,  # inner and outer material
     }
 
     for extra_arg in wall.extra_args:

@@ -22,12 +22,14 @@ if __name__ == "__main__":
                                             "Usually './data/processed/vgg_crop_select/[split]/drop_[drop_fraction]/archs'.")
     parser.add_argument("texture_crops_path", help="Path to saved texture crops. "
                                                    "Usually './data/processed/vgg_crop_select/[split]/drop_[drop_fraction]/tileable_texture_crops'.")
+    parser.add_argument("--texture-internal-walls-only", action="store_true", default=False, help="Specify flag to ommit textures on external side of perimeter walls.")
     parser.add_argument("split", help="train/val/test")
     args = parser.parse_args()
     conf.process_args(args)
 
     output_path = args.output_path
     texture_crops_path = args.texture_crops_path
+    texture_internal_walls_only = args.texture_internal_walls_only
     split = args.split
 
     if not osp.exists(output_path):
@@ -46,4 +48,4 @@ if __name__ == "__main__":
         logging.info("[%d/%d] Processing %s" % (i, len(houses), house_key))
         load_house_crops(conf, house,
                          osp.join(texture_crops_path, house_key))
-        save_arch(conf, house, osp.join(output_path, house_key))
+        save_arch(conf, house, osp.join(output_path, house_key), texture_both_sides_of_walls=not texture_internal_walls_only)

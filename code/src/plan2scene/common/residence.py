@@ -233,20 +233,22 @@ class House(object):
         for room_index, room in self.rooms.items():
             room.flush(flush_key=flush_key)
 
-    def to_arch_json(self, flush_key: str = "prop") -> dict:
+    def to_arch_json(self, texture_both_sides_of_walls: bool, flush_key: str = "prop") -> dict:
         """
         Returns a dictionary describing the house in arch.json format.
+        :param texture_both_sides_of_walls: Both sides of all walls are textured, including walls with only one interior side. The interior side texture is copied to exterior side.
         :param flush_key: Key used to specify the textures.
         :return: Dictionary in arch.json format
         """
         self.flush(flush_key)
-        return serialize_arch_json(self._arch_house)
+        return serialize_arch_json(self._arch_house, texture_both_sides_of_walls)
 
-    def to_scene_json(self, flush_key: str = "prop") -> dict:
+    def to_scene_json(self, texture_both_sides_of_walls: bool, flush_key: str = "prop") -> dict:
         """
         Returns a dictionary describing the house in scene.json format.
+        :param texture_both_sides_of_walls: Both sides of all walls are textured, including walls with only one interior side. The interior side texture is copied to exterior side.
         :param flush_key: Key used to specify the textures.
         :return: Dictionary in scene.json format.
         """
         self.flush(flush_key)
-        return serialize_scene_json(self._arch_house)
+        return serialize_scene_json(self._arch_house, texture_both_sides_of_walls)

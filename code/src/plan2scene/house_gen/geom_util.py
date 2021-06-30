@@ -2,6 +2,7 @@ import math
 import numpy as np
 
 from arch_parser.models.room import Room
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 
 
 def ray_test(mask, ray_origin: tuple, ray_direction: tuple, ray_length: float) -> tuple:
@@ -52,7 +53,10 @@ def get_room_mask(room: Room):
     processed_walls = []
     all_lines = []
 
-    for wall in room.walls:
+    for wall_assignment in room.walls:
+        assert isinstance(wall_assignment, WallRoomAssignment)
+        wall = wall_assignment.wall
+
         if wall in processed_walls:
             continue
 

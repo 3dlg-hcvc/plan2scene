@@ -2,8 +2,10 @@ from arch_parser import json_util
 from arch_parser.models.cad_model import CADModel
 from arch_parser.models.house import House
 from PIL import Image
+import copy
 
 from arch_parser.models.room import Room
+from arch_parser.models.wall_room_assignment import WallRoomAssignment
 
 NA_COLOR = "#f6deff"
 
@@ -43,7 +45,8 @@ def serialize_texture(texture: Image, surface_id: str, materials_json: list, tex
     }
 
 
-def serialize_room(room: Room, elements: list, materials_json: list, textures_json: list, images_json: list) -> dict:
+def serialize_room(room: Room, elements: list, materials_json: list, textures_json: list, images_json: list, added_walls: dict,
+                   texture_wall_both_sides: bool) -> dict:
     """
     Serializes a room, updating the elements list, materials_json, textures_json and images_json
     :param room: Room to be serialized
@@ -51,6 +54,8 @@ def serialize_room(room: Room, elements: list, materials_json: list, textures_js
     :param materials_json: List of materials to be updated
     :param textures_json: List of textures to be updated
     :param images_json: List of images to be updated
+    :param added_walls: Dictionary of already added walls
+    :param texture_wall_both_sides: Specify true to copy the texture to both inside and outside surface of a wall
     :return: Serialized room json
     """
 
@@ -65,11 +70,30 @@ def serialize_room(room: Room, elements: list, materials_json: list, textures_js
                                                                      textures_json, images_json))
     elements.append(ceiling_json)
 
-    for wall in room.walls:
-        wall_json = json_util.generate_wall_json(wall, room.room_id,
-                                                 serialize_texture(room.wall_texture, wall.wall_id, materials_json,
-                                                                   textures_json, images_json))
-        elements.append(wall_json)
+    for wall_assignment in room.walls:
+        assert isinstance(wall_assignment, WallRoomAssignment)
+        wall = wall_assignment.wall
+        inner_surface_index = wall_assignment.inner_wall_index
+
+        if wall in added_walls:
+            # The wall is already added by another room. We update that wall by assigning the material to the appropriate side.
+            assert added_walls[wall]["roomId"][inner_surface_index] is None
+            added_walls[wall]["roomId"][inner_surface_index] = room.room_id
+            surface_material = copy.deepcopy(serialize_texture(room.wall_texture, wall.wall_id, materials_json,
+                                                               textures_json, images_json))
+            surface_material["name"] = "surface%d" % inner_surface_index
+            added_walls[wall]["materials"][inner_surface_index] = surface_material
+        else:
+            # New wall
+            wall_json = json_util.generate_wall_json(wall, room.room_id, inner_surface_index,
+                                                     material=serialize_texture(room.wall_texture, wall.wall_id, materials_json,
+                                                                                textures_json, images_json),
+                                                     outer_material=serialize_texture(None, wall.wall_id, materials_json,
+                                                                                      textures_json, images_json),
+                                                     texture_both_sides=texture_wall_both_sides
+                                                     )
+            added_walls[wall] = wall_json
+            elements.append(wall_json)
 
     room_json = {
         "id": room.room_id,
@@ -90,10 +114,11 @@ def serialize_rdr(house: House) -> list:
     return results
 
 
-def serialize_arch_json(house: House) -> dict:
+def serialize_arch_json(house: House, texture_both_sides_of_walls) -> dict:
     """
     Serializes a house into a arch_json
     :param house: House to be serialized
+    :param texture_both_sides_of_walls: Both sides of all walls are textured, including walls with only one interior side. The interior side texture is copied to exterior side.
     :return: arch_json as a dict
     """
     elements = []
@@ -105,8 +130,9 @@ def serialize_arch_json(house: House) -> dict:
 
     rooms = []
 
+    added_walls = {}
     for room_id, room in house.rooms.items():
-        rooms.append(serialize_room(room, elements, materials_json, textures_json, images_json))
+        rooms.append(serialize_room(room, elements, materials_json, textures_json, images_json, added_walls, texture_both_sides_of_walls))
 
     r = {
         "id": house.house_key,
@@ -143,13 +169,14 @@ def serialize_cad_models(house: House) -> list:
     return object_jsons
 
 
-def serialize_scene_json(house: House) -> dict:
+def serialize_scene_json(house: House, texture_both_sides_of_walls) -> dict:
     """
     Serializes a house into a arch_json
     :param house: House to be serialized
+    :param texture_both_sides_of_walls: Both sides of all walls are textured, including walls with only one interior side. The interior side texture is copied to exterior side.
     :return: arch_json as a dict
     """
-    arch_json = serialize_arch_json(house)
+    arch_json = serialize_arch_json(house, texture_both_sides_of_walls)
     object_jsons = serialize_cad_models(house)
     result = {
         "format": "sceneState",
@@ -176,32 +203,3 @@ def serialize_scene_json(house: House) -> dict:
         result["scene"][extra_meta] = house.scene_extra_metadata[extra_meta]
 
     return result
-
-
-if __name__ == "__main__":
-    # Test
-
-    from arch_parser.parser import parse
-    import os
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Parse and serialize a house")
-    parser.add_argument("output_path", help="Path to save output arch.json")
-    parser.add_argument("arch_json_path", help="arch.json path")
-    parser.add_argument("photoroom_csv_path", help="photoroom.csv path")
-    args = parser.parse_args()
-
-    house = parse(args.arch_json_path, args.photoroom_csv_path)
-
-    for room_id, room in house.rooms.items():
-        room.floor_texture = Image.new("RGB", (128, 128), color=(255, 0, 0))
-        room.wall_texture = Image.new("RGB", (128, 128), color=(0, 255, 0))
-        room.ceiling_texture = Image.new("RGB", (128, 128), color=(0, 0, 255))
-
-    serialized_json = serialize_arch_json(house)
-    import json
-
-    r = json.dumps(serialized_json, indent=4)
-    print(r)
-    with open(args.output_path, "w") as f:
-        f.write(r)
