@@ -146,6 +146,8 @@ Pretrained models are available [here](./docs/md/pretrained_models.md).
 
  6) Generate evaluation report on FID metric as described [here](./docs/md/compute_fid_metric.md).
 
+## Inference on custom datasets
+ - To use Plan2Scene on floorplans parsed by [raster-to-vector](https://github.com/art-programmer/FloorplanTransformation), follow the [instructions here](./docs/md/plan2scene_on_r2v.md).
 
 ## Training a new Plan2Scene network
 Plan2Scene consists of two trainable components, 1) the texture synthesis stage and 2) the texture propagation stage. Each stage is trained separately. The training procedure is as follows.
