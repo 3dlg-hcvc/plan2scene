@@ -1,21 +1,15 @@
 #!/bin/python3
-from torch_geometric.data import DataLoader
 
 from plan2scene.common.house_parser import parse_houses, load_house_crops, load_house_texture_embeddings, \
     save_house_crops, save_house_texture_embeddings
-from plan2scene.common.image_description import ImageSource
 from plan2scene.config_manager import ConfigManager
-from plan2scene.crop_select.util import fill_textures
 from plan2scene.texture_gen.predictor import TextureGenPredictor
 from plan2scene.texture_gen.utils.io import load_conf_eval
+from plan2scene.texture_prop.gnn_prop import propagate_textures
 from plan2scene.texture_prop.predictor import TexturePropPredictor
-from plan2scene.texture_prop.graph_generators import InferenceHGG
-from plan2scene.texture_prop.houses_dataset import HouseDataset
-from plan2scene.texture_prop.utils import get_graph_generator, update_embeddings, clear_predictions
 import os
 import os.path as osp
 import logging
-import torch
 
 
 def process(conf: ConfigManager, houses: dict, checkpoint_path: str, keep_existing_predictions: bool, use_train_graph_generator: bool,
@@ -30,7 +24,6 @@ def process(conf: ConfigManager, houses: dict, checkpoint_path: str, keep_existi
     :param use_val_graph_generator: Specify true to use the graph generator used at validation time.
     :return:
     """
-    device = conf.texture_prop.device
     tg_predictor = TextureGenPredictor(
         conf=load_conf_eval(config_path=conf.texture_gen.texture_synth_conf),
         rgb_median_emb=conf.texture_gen.rgb_median_emb)
@@ -38,32 +31,7 @@ def process(conf: ConfigManager, houses: dict, checkpoint_path: str, keep_existi
 
     tp_predictor = TexturePropPredictor(conf, conf.texture_prop)
     tp_predictor.load_checkpoint(checkpoint_path=checkpoint_path)
-
-    assert not (use_train_graph_generator and use_val_graph_generator)  # Cant use both together
-
-    # Select a suitable graph generator
-    if use_train_graph_generator:
-        nt_graph_generator = get_graph_generator(conf, conf.texture_prop.train_graph_generator, include_target=False)
-    elif use_val_graph_generator:
-        nt_graph_generator = get_graph_generator(conf, conf.texture_prop.val_graph_generator, include_target=False)
-    else:
-        nt_graph_generator = InferenceHGG(conf=conf, include_target=False)
-
-    val_nt_dataset = HouseDataset(houses, graph_generator=nt_graph_generator)
-    val_nt_dataloader = DataLoader(val_nt_dataset, batch_size=conf.texture_prop.train.bs)
-
-    if not keep_existing_predictions:
-        clear_predictions(conf, houses)
-
-    with torch.no_grad():
-        for i, batch in enumerate(val_nt_dataloader):
-            logging.info("Batch [%d/%d] Graph Inference" % (i, len(val_nt_dataloader)))
-            output = tp_predictor.predict(batch.to(device))
-            update_embeddings(conf, houses, batch, output,
-                              keep_existing_predictions=keep_existing_predictions)
-
-    logging.info("Synthesizing textures")
-    fill_textures(conf, houses, log=True, predictor=tg_predictor, image_source=ImageSource.GNN_PROP, skip_existing_textures=keep_existing_predictions)
+    propagate_textures(conf, houses, tg_predictor, tp_predictor, keep_existing_predictions, use_train_graph_generator, use_val_graph_generator)
 
 
 if __name__ == "__main__":

@@ -1,42 +1,10 @@
 from plan2scene.common.house_parser import parse_houses, load_house_crops, save_house_crops
-from plan2scene.common.image_description import ImageDescription
 from plan2scene.config_manager import ConfigManager
 import os.path as osp
 import os
 import logging
 
-from plan2scene.common.residence import Room, House
-from plan2scene.utils.tile_util import tile_image
-
-
-def seam_correct_surface(textures_map: dict, embark_texture_synthesis_path: str, seam_mask_path: str, key: str = "prop") -> None:
-    """
-    Correct seams of textures of a surface.
-    :param textures_map: Surface textures dictionary of a surface
-    :param embark_texture_synthesis_path:  Path to embark studios texture synthesis library.
-    :param seam_mask_path: Path to the mask used for seam correction.
-    :param key: Key denoting predicted texture. We seam correct this entry.
-    """
-    if key in textures_map:
-        texture_description = textures_map[key]
-        assert isinstance(texture_description, ImageDescription)
-        texture = texture_description.image
-        texture = tile_image(texture, embark_texture_synthesis_path, seam_mask_path)
-        texture_description.image = texture
-
-
-def process_house(house: House, embark_texture_synthesis_path: str, seam_mask_path: str) -> None:
-    """
-    Correct seams of predicted textures assigned to a house.
-    :param house: House considered
-    :param embark_texture_synthesis_path: Path to embark studios texture synthesis library.
-    :param seam_mask_path: Path to the mask used for seam correction.
-    """
-    for room_index, room in house.rooms.items():
-        assert isinstance(room, Room)
-        for surface in room.surface_textures:
-            seam_correct_surface(room.surface_textures[surface], embark_texture_synthesis_path, seam_mask_path)
-
+from plan2scene.utils.tile_util import seam_correct_house
 
 if __name__ == "__main__":
     """
@@ -80,5 +48,5 @@ if __name__ == "__main__":
         logging.info("[%d/%d] Processing %s" % (i, len(houses), house_key))
         load_house_crops(conf, house,
                          osp.join(texture_crops_path, house_key))
-        process_house(house, embark_texture_synthesis_path, seam_mask_path)
+        seam_correct_house(house, embark_texture_synthesis_path, seam_mask_path)
         save_house_crops(house, osp.join(output_path, house_key))

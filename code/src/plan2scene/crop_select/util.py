@@ -4,6 +4,34 @@ from plan2scene.config_manager import ConfigManager
 from plan2scene.texture_gen.predictor import TextureGenPredictor
 from plan2scene.texture_gen.utils.io import load_conf_eval
 import logging
+import os.path as osp
+
+from plan2scene.utils.io import load_image
+
+
+def fill_texture_embeddings(conf: ConfigManager, house: House, predictor: TextureGenPredictor) -> None:
+    """
+    Compute surface texture embeddings of a house
+    :param conf: Config Manager
+    :param house: House processed
+    :param predictor: Predictor with loaded checkpoint
+    """
+    for room_index, room in house.rooms.items():
+        assert isinstance(room, Room)
+        for photo in room.photos:
+            for surface in conf.surfaces:
+                surface_instances = [i for i in range(conf.texture_gen.masks_per_surface[surface])]
+                for surface_instance in surface_instances:
+                    for crop_instance in range(conf.texture_gen.crops_per_mask):
+                        candidate_key = "%s_%d_crop%d" % (photo, surface_instance, crop_instance)
+                        if osp.exists(osp.join(conf.data_paths.rectified_crops_path, surface, candidate_key + ".png")):
+                            image = load_image(
+                                osp.join(conf.data_paths.rectified_crops_path, surface, candidate_key + ".png"))
+
+                            emb, loss = predictor.predict_embs([image])
+                            room.surface_textures[surface][candidate_key] = ImageDescription(image, ImageSource.NEURAL_SYNTH)
+                            room.surface_embeddings[surface][candidate_key] = emb
+                            room.surface_losses[surface][candidate_key] = loss
 
 
 def fill_house_textures(conf: ConfigManager, house: House, image_source: ImageSource, skip_existing_textures: bool, key="prop",
@@ -57,3 +85,41 @@ def fill_textures(conf: ConfigManager, houses: dict, image_source: ImageSource, 
         if log:
             logging.info("[%d/%d] Generating Textures %s" % (i, len(houses), house_key))
         fill_house_textures(conf, house, skip_existing_textures=skip_existing_textures, key=key, predictor=predictor, image_source=image_source)
+
+
+def get_least_key(kv):
+    """
+    Given a dictionary, returns the key with minimum value.
+    :param kv: Dictionary considered.
+    :return: Key with the minimum value.
+    """
+    min_k = None
+    min_v = None
+    for k, v in kv.items():
+        if min_v is None or v.item() < min_v:
+            min_k = k
+            min_v = v.item()
+
+    return min_k
+
+
+def vgg_crop_select(conf: ConfigManager, house: House, predictor: TextureGenPredictor) -> None:
+    """
+    Assigns the least VGG loss crop for each surface of the house.
+    :param conf: ConfigManager
+    :param house: House to update
+    :param predictor: Predictor used to synthesize textures
+    """
+    for room_index, room in house.rooms.items():
+        assert isinstance(room, Room)
+        # Calculate the least VGG loss embeddings
+        for surface in room.surface_embeddings:
+            least_key = get_least_key(room.surface_losses[surface])
+            if least_key is not None:
+                room.surface_embeddings[surface] = {"prop": room.surface_embeddings[surface][least_key]}
+                room.surface_losses[surface] = {"prop": room.surface_losses[surface][least_key]}
+            else:
+                room.surface_embeddings[surface] = {}
+                room.surface_losses[surface] = {}
+
+    fill_textures(conf, {house.house_key: house}, predictor=predictor, log=False, image_source=ImageSource.VGG_CROP_SELECT, skip_existing_textures=False)

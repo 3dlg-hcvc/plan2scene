@@ -14,3 +14,4 @@ experiments
 conf/plan2scene/seam_correct.json
 conf/plan2scene/render.json
 *.backup
+outputs
