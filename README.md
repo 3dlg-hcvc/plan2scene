@@ -56,7 +56,7 @@ export PYTHONPATH=./code/src
 ## Pretrained models
 Pretrained models are available [here](./docs/md/pretrained_models.md).
 
-## Inference
+## Inference on Rent3D++ dataset
 1) Download and pre-process the Rent3D++ dataset as described in the data section.
 2) Setup a [pretrained model](./docs/md/pretrained_models.md) or train a new Plan2Scene network.    
 2) Synthesize textures for observed surfaces using the VGG textureness score.
@@ -73,7 +73,7 @@ Pretrained models are available [here](./docs/md/pretrained_models.md).
    ```
    To preview results, follow the instructions below.
 
-## Previewing Outputs
+## Previewing outputs
 1) Complete inference steps.
 2) Correct seams of predicted textures and make them tileable.
    ```bash
@@ -101,7 +101,7 @@ Pretrained models are available [here](./docs/md/pretrained_models.md).
    python code/scripts/plan2scene/preview_houses.py ./data/processed/gnn_prop/test/drop_0.0/previews ./data/processed/gnn_prop/test/drop_0.0/archs ./data/input/photos test --textures-path ./data/processed/gnn_prop/test/drop_0.0/tileable_texture_crops 0.0
    # Open ./data/processed/gnn_prop/test/drop_0.0/previews/preview.html
    ```
-## Test
+## Test on Rent3D++ dataset
 1) [Optional] Download a pre-trained model or train the substance classifier used by the Subs metric. 
    Training instructions are available [here](./docs/md/train_substance_classifier.md).
    Pre-trained weights are available [here](./docs/md/pretrained_models.md).
@@ -146,8 +146,12 @@ Pretrained models are available [here](./docs/md/pretrained_models.md).
 
  6) Generate evaluation report on FID metric as described [here](./docs/md/compute_fid_metric.md).
 
-## Inference on custom datasets
- - To use Plan2Scene on floorplans parsed by [raster-to-vector](https://github.com/art-programmer/FloorplanTransformation), follow the [instructions here](./docs/md/plan2scene_on_r2v.md).
+## Inference on custom data
+If you have scanned images of floorplans, you can use [raster-to-vector](https://github.com/art-programmer/FloorplanTransformation) to convert those floorplan images to a vector format. Then, follow the [instructions here](./docs/md/plan2scene_on_r2v.md) to create textured 3D meshes of houses. 
+
+If you have floorplan vectors in another format, you can convert them to the raster-to-vector __annotation format__. 
+Then, follow the same instructions as before to create textured 3D meshes of houses. 
+The R2V annotation format is explained with examples in the [data section of the raster-to-vector repository](https://github.com/art-programmer/FloorplanTransformation#data).
 
 ## Training a new Plan2Scene network
 Plan2Scene consists of two trainable components, 1) the texture synthesis stage and 2) the texture propagation stage. Each stage is trained separately. The training procedure is as follows.

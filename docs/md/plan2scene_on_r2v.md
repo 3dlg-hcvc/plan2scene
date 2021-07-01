@@ -1,5 +1,11 @@
-## Using Plan2Scene with Raster-to-Vector outputs
-1) Convert raster to vector outputs to the scene.json format using the [R2V-to-Plan2Scene tool](https://github.com/3dlg-hcvc/r2v-to-plan2scene).
+## Using Plan2Scene with Raster-to-Vector output
+If you have a scanned image of a floorplan, you can use [raster-to-vector](https://github.com/art-programmer/FloorplanTransformation) to convert it to a vector format. Then, follow the steps below to create textured 3D mesh of the house.
+
+If you have a floorplan vector in another format, you can convert it to the raster-to-vector __annotation format__. 
+Then, follow the same steps below to create a textured 3D mesh of a house.
+The R2V annotation format is explained with examples in the [data section of the raster-to-vector repository](https://github.com/art-programmer/FloorplanTransformation#data).
+
+1) Convert the R2V output / R2V annotation to the scene.json format using the [R2V-to-Plan2Scene tool](https://github.com/3dlg-hcvc/r2v-to-plan2scene).
 
 2) [Optional] To place CAD models for doors, windows and fixed objects, use the scripts [place_hole_cad_models.py](https://github.com/3dlg-hcvc/plan2scene/blob/main/code/scripts/plan2scene/place_hole_cad_models.py) and [place_object_cad_models.py](https://github.com/3dlg-hcvc/plan2scene/blob/main/code/scripts/plan2scene/place_object_cad_models.py).
     ```bash
