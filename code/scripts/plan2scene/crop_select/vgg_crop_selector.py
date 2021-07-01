@@ -9,47 +9,9 @@ import logging
 
 from plan2scene.common.house_parser import load_house_texture_embeddings, parse_houses, save_house_crops, \
     save_house_texture_embeddings
-from plan2scene.crop_select.util import fill_textures
+from plan2scene.crop_select.util import fill_textures, vgg_crop_select
 from plan2scene.texture_gen.predictor import TextureGenPredictor
 from plan2scene.texture_gen.utils.io import load_conf_eval
-
-
-def get_least_key(kv):
-    """
-    Given a dictionary, returns the key with minimum value.
-    :param kv: Dictionary considered.
-    :return: Key with the minimum value.
-    """
-    min_k = None
-    min_v = None
-    for k, v in kv.items():
-        if min_v is None or v.item() < min_v:
-            min_k = k
-            min_v = v.item()
-
-    return min_k
-
-
-def process(conf: ConfigManager, house: House, predictor: TextureGenPredictor) -> None:
-    """
-    Assigns the least VGG loss crop for each surface of the house.
-    :param conf: ConfigManager
-    :param house: House to update
-    :param predictor: Predictor used to synthesize textures
-    """
-    for room_index, room in house.rooms.items():
-        assert isinstance(room, Room)
-        # Calculate the least VGG loss embeddings
-        for surface in room.surface_embeddings:
-            least_key = get_least_key(room.surface_losses[surface])
-            if least_key is not None:
-                room.surface_embeddings[surface] = {"prop": room.surface_embeddings[surface][least_key]}
-                room.surface_losses[surface] = {"prop": room.surface_losses[surface][least_key]}
-            else:
-                room.surface_embeddings[surface] = {}
-                room.surface_losses[surface] = {}
-
-    fill_textures(conf, {house.house_key: house}, predictor=predictor, log=False, image_source=ImageSource.VGG_CROP_SELECT, skip_existing_textures=False)
 
 
 if __name__ == "__main__":
@@ -100,7 +62,7 @@ if __name__ == "__main__":
         logging.info("[%d/%d] Processing %s" % (i, len(houses), house_key))
         load_house_texture_embeddings(house,
                                       osp.join(texture_gen_path, "surface_texture_embeddings", house_key + ".json"))
-        process(conf, house, predictor=predictor)
+        vgg_crop_select(conf, house, predictor=predictor)
 
         save_house_crops(house, osp.join(output_path, "texture_crops", house_key))
         save_house_texture_embeddings(house, osp.join(output_path, "surface_texture_embeddings", house_key + ".json"))

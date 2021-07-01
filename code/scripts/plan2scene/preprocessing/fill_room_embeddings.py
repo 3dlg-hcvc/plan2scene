@@ -1,16 +1,17 @@
 #!/usr/bin/python3
 from plan2scene.common.house_parser import parse_houses, save_house_texture_embeddings, save_house_crops
 from plan2scene.common.image_description import ImageDescription, ImageSource
-from plan2scene.common.residence import Room
+from plan2scene.common.residence import Room, House
 from plan2scene.config_manager import ConfigManager
 import os
 import os.path as osp
+
+from plan2scene.crop_select.util import fill_texture_embeddings
 from plan2scene.texture_gen.utils.io import load_conf_eval
 from plan2scene.utils.io import load_image
 
 import logging
 from plan2scene.texture_gen.predictor import TextureGenPredictor
-
 
 def process(conf: ConfigManager, houses: dict, output_path: str) -> None:
     """
@@ -32,23 +33,7 @@ def process(conf: ConfigManager, houses: dict, output_path: str) -> None:
 
     for i, (house_key, house) in enumerate(houses.items()):
         logging.info("[%d/%d] Processing %s" % (i, len(houses), house_key))
-        for room_index, room in house.rooms.items():
-            assert isinstance(room, Room)
-            for photo in room.photos:
-                for surface in conf.surfaces:
-                    surface_instances = [i for i in range(conf.texture_gen.masks_per_surface[surface])]
-                    for surface_instance in surface_instances:
-                        for crop_instance in range(conf.texture_gen.crops_per_mask):
-                            candidate_key = "%s_%d_crop%d" % (photo, surface_instance, crop_instance)
-                            if osp.exists(osp.join(conf.data_paths.rectified_crops_path, surface, candidate_key + ".png")):
-                                image = load_image(
-                                    osp.join(conf.data_paths.rectified_crops_path, surface, candidate_key + ".png"))
-
-                                emb, loss = predictor.predict_embs([image])
-                                room.surface_textures[surface][candidate_key] = ImageDescription(image, ImageSource.NEURAL_SYNTH)
-                                room.surface_embeddings[surface][candidate_key] = emb
-                                room.surface_losses[surface][candidate_key] = loss
-
+        fill_texture_embeddings(conf, house, predictor)
         save_house_texture_embeddings(house, save_path=osp.join(output_path, "surface_texture_embeddings", house_key + ".json"))
         save_house_crops(house, save_path=osp.join(output_path, "texture_crops", house_key))
 
