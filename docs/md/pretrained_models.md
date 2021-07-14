@@ -63,7 +63,7 @@ Trained Plan2Scene models are shown below.
         </td>
         <td>
         [<a href="../../conf/plan2scene/texture_prop_conf/default.json">texture_prop_conf.json</a>]
-        [<a href="https://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-prop/synth-v2-epoch750/checkpoints/loss-0.51442-epoch-250.ckpt">Weights</a>]
+        [<a href="http://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-prop/synth-v2-epoch750/checkpoints/loss-0.51442-epoch-250.ckpt">Weights</a>]
         </td>
         <td><b>0.386</b></td>
         <td><b>0.027</b></td>
