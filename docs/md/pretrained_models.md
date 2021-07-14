@@ -59,11 +59,11 @@ Trained Plan2Scene models are shown below.
     <tr>
         <td>Synth (ours) <br> <small>Version 2*</small></td>
         <td>[<a href="../../conf/plan2scene/texture_synth_conf/v2.yml">texture_synth_conf.yml</a>]
-        [<a href="http://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-synth/v2/checkpoints/loss-7.67493-epoch-750.ckpt">Weights</a>]
+        [<a href="https://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-synth/v2/checkpoints/loss-7.67493-epoch-750.ckpt">Weights</a>]
         </td>
         <td>
         [<a href="../../conf/plan2scene/texture_prop_conf/default.json">texture_prop_conf.json</a>]
-        [<a href="http://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-prop/synth-v2-epoch750/checkpoints/loss-0.51442-epoch-250.ckpt">Weights</a>]
+        [<a href="https://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/texture-prop/synth-v2-epoch750/checkpoints/loss-0.51442-epoch-250.ckpt">Weights</a>]
         </td>
         <td><b>0.386</b></td>
         <td><b>0.027</b></td>
@@ -163,7 +163,7 @@ All models are trained following the approach described in the supplementary mat
             [<a href="../../conf/plan2scene/substance_classifier_conf/v2.json">substance_classifier_conf.json</a>]
         </td>
         <td>
-            [<a href="http://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/substance-classifier/v2/checkpoints/correct_57_total_64_epoch_120.ckpt">Weights</a>]
+            [<a href="https://aspis.cmpt.sfu.ca/projects/plan2scene/pretrained-models/substance-classifier/v2/checkpoints/correct_57_total_64_epoch_120.ckpt">Weights</a>]
         </td>
     </tr>
 </table>
